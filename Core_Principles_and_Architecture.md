@@ -190,7 +190,7 @@ unstructured_agent = Agent(
 
 ## 🤝 Multi-Agent System Design Patterns
 
-### 👑 Manager Pattern (Agents as Tools)
+### 👑 Manager Pattern 
 
 A central manager/orchestrator invokes specialized sub-agents as tools and retains control of the conversation.
 

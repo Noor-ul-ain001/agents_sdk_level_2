@@ -19,25 +19,28 @@ The OpenAI Agents SDK provides comprehensive support for both synchronous and as
 from agents import function_tool
 import time
 
+
 @function_tool
-def calculate_metrics(data: dict) -> dict:
-    """Calculate business metrics from data.
-    
-    Args:
-        data: Dictionary containing sales and operational data
+def calculate_metrics(data: SalesInput) -> dict:
     """
-    # Simulate CPU-intensive calculation
-    total_revenue = sum(data.get('sales', []))
-    average_order = total_revenue / len(data.get('sales', [1]))
-    
-    # This blocks the event loop
-    time.sleep(2)  # Simulate processing time
-    
+    Calculate business metrics from data.
+    Args:
+        data: A dict containing sales list
+    Returns:
+        A dict with total_revenue, average_order_value, processed_items
+    """
+    total_revenue = sum(data["sales"])
+    average_order = total_revenue / len(data["sales"]) if data["sales"] else 0.0
+
+    # simulate some processing
+    time.sleep(2)
+
     return {
-        'total_revenue': total_revenue,
-        'average_order_value': average_order,
-        'processed_items': len(data.get('sales', []))
+        "total_revenue": total_revenue,
+        "average_order_value": average_order,
+        "processed_items": len(data["sales"])
     }
+
 ```
 
 ### Basic Asynchronous Tools
@@ -350,3 +353,4 @@ async def monitored_async_tool() -> dict:
         await asyncio.sleep(1)  # Simulate work
         return {'status': 'completed'}
 ```
+

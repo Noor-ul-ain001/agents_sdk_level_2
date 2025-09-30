@@ -32,35 +32,6 @@ The decorator also accepts several parameters for customization:
 | `strict_mode` | Uses strict JSON schema. | `True` (recommended). |
 | `is_enabled` | Dynamically enables/disables the tool. | `True` (enabled). |
 
-Here is an example of using some of these parameters:
-```python
-@function_tool(
-    name_override="BudgetCalculator",
-    description_override="Calculates travel expenses for a trip.",
-    strict_mode=True
-)
-def complex_budget_calculator(destination: str, days: int, travel_style: str) -> float:
-    # ... function logic ...
-    return estimated_cost
-```
-
-For functions that require more complex input, you can use a `TypedDict` to define a structured input schema:
-```python
-from typing_extensions import TypedDict
-
-class TripInfo(TypedDict):
-    """Information about a trip."""
-    destination: str
-    days: int
-
-@function_tool
-def estimate_budget(trip_info: TripInfo) -> float:
-    """Estimate the budget for a trip."""
-    base_cost = 150
-    cost_multipliers = {"Norway": 2.0, "Spain": 1.2}
-    multiplier = cost_multipliers.get(trip_info["destination"], 1.5)
-    return base_cost * trip_info["days"] * multiplier
-```
 
 ### 🔍 How Schema Generation Works
 
@@ -79,3 +50,4 @@ It is strongly recommended to keep **strict JSON schema mode enabled** (the defa
 -   **Dynamic Tool Activation**: The `is_enabled` parameter can be a callable that dynamically decides whether the tool is active based on the run context or the agent's state.
 -   **Input and Output Guardrails**: You can equip your tools with `tool_input_guardrails` and `tool_output_guardrails` to run validation checks before and after the tool is invoked.
 -   **Handling Context**: A function can access the run context by including a `RunContextWrapper` or `ToolContext` parameter as its **first argument**. This provides access to the current session, agent, and other state.
+

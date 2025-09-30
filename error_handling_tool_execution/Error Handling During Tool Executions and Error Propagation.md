@@ -12,23 +12,6 @@ The table below summarizes the core error handling mechanisms available when usi
 
 For **manually created `FunctionTool` objects**, you must handle all errors within the `on_invoke_tool` function. For the more common `@function_tool` decorator, you control the error handling strategy by passing different arguments.
 
-Here is a practical example of implementing a custom error function:
-
-```python
-from agents import function_tool
-
-def my_custom_error_function(ctx, agent, tool, error):
-    # You can log the error here
-    print(f"Tool {tool.name} failed with error: {str(error)}")
-    # Return a helpful message for the LLM
-    return f"The tool '{tool.name}' encountered an error. Please adjust your request and try again."
-
-@function_tool(failure_error_function=my_custom_error_function)
-def my_potentially_failing_tool(input_param: str) -> str:
-    # Your tool logic that might fail
-    result = some_risky_operation(input_param)
-    return result
-```
 
 ### 🚨 Common Errors and Propagation Risks
 
@@ -51,4 +34,5 @@ To build reliable agent systems, you should implement a combination of technical
 - **Use Structured Data Passing**: To avoid errors from natural language misunderstandings, use structured data channels (like the `sly_data` concept in one multi-agent accelerator) to pass critical information between agents. This keeps data in a machine-readable format that is less prone to misinterpretation by LLMs.
 
 - **Adopt "Error-as-Value" Patterns**: Instead of relying solely on exceptions, you can structure your tools to return a tuple `(success: bool, result: Any)`. This forces the calling code to explicitly handle both success and failure states, making error processing a first-class concern.
+
 

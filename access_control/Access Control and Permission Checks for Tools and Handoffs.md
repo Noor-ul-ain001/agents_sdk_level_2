@@ -3,73 +3,6 @@
 ## What is Access Control?
 **Access control** decides which agents can use which tools and see which data. It's like giving different keys to different people in a company.
 
-## Basic Permission Types
-
-### 1. **Tool Permissions**
-```python
-# Example: Who can use what tools
-permissions = {
-    "research_agent": ["web_search", "read_files"],
-    "finance_agent": ["database_query", "calculator"],
-    "admin_agent": ["all_tools"]  # Special access
-}
-```
-
-### 2. **Data Access Levels**
-```
-Public Data → Internal Data → Confidential Data → Secret Data
-    ↓             ↓               ↓               ↓
- All Agents   Most Agents    Few Agents      One Agent
-```
-
-## Simple Implementation
-
-### Basic Permission Check
-```python
-def can_use_tool(agent_name, tool_name):
-    # Define who can use what
-    permissions = {
-        "researcher": ["search", "read_docs"],
-        "writer": ["write_docs", "edit_files"],
-        "analyst": ["read_docs", "analyze_data"]
-    }
-    
-    # Check if agent has permission
-    if tool_name in permissions.get(agent_name, []):
-        return True
-    else:
-        return False
-
-# Usage
-if can_use_tool("researcher", "search"):
-    result = do_search()
-else:
-    result = "Sorry, you can't use this tool"
-```
-
-### Data Handoff Control
-```python
-def can_receive_data(sender, receiver, data_type):
-    # Define allowed data sharing
-    sharing_rules = {
-        "researcher": ["analyst", "writer"],  # Who researcher can talk to
-        "analyst": ["writer"],
-        "writer": []  # Writer doesn't send data to others
-    }
-    
-    return receiver in sharing_rules.get(sender, [])
-```
-
-## Common Patterns
-
-### 1. **Role-Based Access**
-```python
-user_roles = {
-    "alice": "admin",      # Can do everything
-    "bob": "researcher",   # Can research but not edit
-    "charlie": "viewer"    # Can only read
-}
-```
 
 ### 2. **Level-Based Access**
 ```
@@ -118,4 +51,5 @@ Manager Agent → Can: everything, including override actions
 - [ ] Decide who can use what
 - [ ] Test permissions work correctly
 - [ ] Log access attempts
+
 
